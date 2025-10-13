@@ -18,7 +18,7 @@ Then we modify the `base-builder` Dockerfile to include `bear` and `clang-extrac
 
 ```shell
 # Download prebuilt clang-extract
-wget 'https://seafile.vul337.team:8443/f/1f11e8c4a8eb46dcb981/?dl=1' -O oss-fuzz/infra/base-images/base-builder/clang-extract.tar.gz
+wget 'https://cloud.vul337.team:8443/public.php/dav/files/br9qNTzwnmGgagF/clang-extract.tar.gz' -O oss-fuzz/infra/base-images/base-builder/clang-extract.tar.gz
 
 # Add bear and clang-extract to base-builder Dockerfile
 cd oss-fuzz
@@ -26,12 +26,14 @@ git checkout 4bca88f3a369679336485181961db305161fe240
 git apply ../oss-fuzz-patch/*.diff
 ```
 
-Then we build the Docker image.
+Then we load the Docker image.
 
 ```shell
-python infra/helper.py build_image base-builder --cache --pull
-python infra/helper.py build_image base-runner --cache --no-pull
+curl https://cloud.vul337.team:8443/public.php/dav/files/br9qNTzwnmGgagF/base-runner.tar.gz -o - | docker load
+curl https://cloud.vul337.team:8443/public.php/dav/files/br9qNTzwnmGgagF/base-builder.tar.gz -o - | docker load
 ```
+
+> It is worth noting that although we pin the commit of oss-fuzz and load the Docker images we provided, the fuzzer building scripts always pull the latest commit of each project. Therefore, the extracted functions may vary slightly from those used in our paper, and some projects may not be able to be built.
 
 Then we compile the dummy library for linking with the fuzzer.
 
