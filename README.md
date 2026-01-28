@@ -76,14 +76,19 @@ Optionally, extract only several selected projects with 96 workers
 python3 extract_functions.py --worker-count 96 --project file,libprotobuf-mutator
 ```
 
-
-Initially, execute the fuzzers to collect covered functions, including their names and corresponding files. Coverage information is recorded in `{oss_fuzz_path}/build/stats/{project}/{fuzzer}_result.json`. 
+Initially, execute the fuzzers to collect covered functions, including their names and corresponding files. Coverage information is recorded in `{oss_fuzz_path}/build/stats/{project}/{fuzzer}_result.json`.
 For each function covered by the fuzzer, use `clang` and `clang-extract` to extract functions with external dependencies from each project, storing them in `{oss_fuzz_path}/functions/{project}`.
-
 
 ## Compilation
 
-To compile the extracted functions, ensure that LLVM and Clang are installed on your system. 
+Uninstall clang and install libclang
+
+```shell
+pip uninstall clang
+pip install libclang
+```
+
+To compile the extracted functions, ensure that LLVM and Clang are installed on your system.
 
 Specify the libclang library file path in `LIBCLANG_PATH`, for example, `export LIBCLANG_PATH=/usr/lib/llvm-16/lib/libclang-16.so.1`, adjusting it to match your installation path.
 
@@ -108,7 +113,7 @@ The dataset acts as the ground truth for evaluating and is stored in `$dataset_p
 This section outlines the scripts used for decompilation, utilizing both traditional decompilers and large language models (LLMs).
 
 ### Decompiler-Service
-    
+
 We utilize a decompiler-service to perform scalable decompilation. The service is hosted on a server.
 
 ```shell
@@ -164,7 +169,7 @@ python decompile.py --base-dataset-path $dataset_path --output $dataset_path/dec
 - `output`: Path where the decompiled code dataset will be stored.
 
 This script interfaces with a server hosting six traditional decompilers, such as Hex-Rays, to request decompiled code asynchronously.
-    
+
 ### LLM Decompilers
 
 ```shell
@@ -212,12 +217,12 @@ If this work is helpful for your research, please consider citing the following 
 
 ```
 @misc{gao2025decompilebenchcomprehensivebenchmarkevaluating,
-      title={DecompileBench: A Comprehensive Benchmark for Evaluating Decompilers in Real-World Scenarios}, 
+      title={DecompileBench: A Comprehensive Benchmark for Evaluating Decompilers in Real-World Scenarios},
       author={Zeyu Gao and Yuxin Cui and Hao Wang and Siliang Qin and Yuanda Wang and Bolun Zhang and Chao Zhang},
       year={2025},
       eprint={2505.11340},
       archivePrefix={arXiv},
       primaryClass={cs.SE},
-      url={https://arxiv.org/abs/2505.11340}, 
+      url={https://arxiv.org/abs/2505.11340},
 }
 ```
