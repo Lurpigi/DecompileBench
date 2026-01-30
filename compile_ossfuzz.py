@@ -14,9 +14,9 @@ from loguru import logger
 from tqdm import tqdm
 
 from evaluate_rsr import DockerContainer
-from libclang import set_libclang_path
+# from libclang import set_libclang_path
 
-set_libclang_path()
+# set_libclang_path()
 
 repo_path = pathlib.Path(__file__).resolve().parent
 
