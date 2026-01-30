@@ -12,10 +12,10 @@ import datasets
 import pandas as pd
 import yaml
 from tqdm import tqdm
-# from libclang import set_libclang_path
+from libclang import set_libclang_path
 
 
-# set_libclang_path()
+set_libclang_path()
 
 repo_path = pathlib.Path(__file__).resolve().parent
 

@@ -81,13 +81,6 @@ For each function covered by the fuzzer, use `clang` and `clang-extract` to extr
 
 ## Compilation
 
-Uninstall clang and install libclang
-
-```shell
-pip uninstall clang
-pip install libclang
-```
-
 To compile the extracted functions, ensure that LLVM and Clang are installed on your system.
 
 Specify the libclang library file path in `LIBCLANG_PATH`, for example, `export LIBCLANG_PATH=/usr/lib/llvm-16/lib/libclang-16.so.1`, adjusting it to match your installation path.
